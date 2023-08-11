@@ -1,0 +1,72 @@
+<main class="time-box" *ngIf="showPicker">
+    <div class="picker-wrapper" (document:mouseup)="mouseUp()">
+        <div class="preview">
+            <div class="preview-val" (click)="selectingHours = true">{{ (hoursWheel[selectedHour] <= 9) ? '0' : '' }}{{
+                    hoursWheel[selectedHour] }}</div>
+                    <div class="preview-val" style="color: white">:</div>
+                    <div class="preview-val" (click)="selectingHours = false">{{ (selectedMinute <= 9) ? '0' : '' }}{{
+                            selectedMinute }}</div>
+                            <div class="preview-val"
+                                style="flex-direction: column; font: normal normal normal 10px/17px Open Sans;">
+                                <div *ngIf="isAM" style="color: white;">AM</div>
+                                <div *ngIf="!isAM" style="color: white;">PM</div>
+                            </div>
+                    </div>
+                    <div class="timer d-flex">
+                        <div class="dial-wrapper">
+                            <div class="picker-dial" (mouseleave)="mouseExit()" (mousedown)="mouseDown(); false;">
+                                <div *ngFor="let hour of hoursWheel; let i = index" class="dial-sector" [style.--i]="i"
+                                    (mouseenter)="mouseEnter()" (mousedown)="mouseDown()"
+                                    (click)="selectByClick('selectedHour', i)">
+                                    <div *ngIf="selectedHour == i" class="sector-line"></div>
+                                    <div [ngClass]="selectedHour == i ? 'sector-val active' : 'sector-val'">
+                                        {{ hour }}
+                                    </div>
+                                    <!-- <div class="sector-selector" (mouseover)="mouseOver('selectedHour', i)"></div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="am-pm-div">
+                            <div [ngClass]="isAM ? 'active-time': 'am-pm'" (click)="isAM = true; handleOnTimeChange();">
+                                AM</div>
+                            <div [ngClass]="!isAM ? 'active-time': 'am-pm'"
+                                (click)="isAM = false; handleOnTimeChange();">PM</div>
+                        </div>
+                        <div class="dial-wrapper">
+                            <div class="picker-dial" (mouseleave)="mouseExit()" (mousedown)="mouseDown(); false;">
+                                <div *ngFor="let min of minutesWheel; let i = index" class="min-sector"
+                                    (click)="selectByClick('selectedMinute', i)" [style.--i]="i">
+                                    <div *ngIf="selectedMinute == i" class="sector-line"></div>
+                                    <div *ngIf="i % 5 == 0" [ngClass]="selectedMinute == i ? 'min-sector-val active' : 'min-sector-val'" [style.--i]="i">
+                                        {{i%5==0 ? min : '.'}}
+                                    </div>
+                                    <div *ngIf="i % 5 != 0" class="mins-minor"
+                                        [ngStyle]="{'border-color' : selectedMinute == i ? '#FFB92C' : 'transparent'}">
+                                        {{'.'}}
+                                    </div>
+                                    <div class="sector-selector" (mouseover)="mouseOver('selectedMinute', i)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="dial-wrapper">
+                            <div class="picker-dial" (mouseleave)="mouseExit()" (mousedown)="mouseDown(); false;">
+                                <div *ngFor="let min of minutesWheel; let i = index" class="dial-sector"
+                                     [style.--i]="i"
+                                     (mouseenter)="mouseEnter()" (mousedown)="mouseDown()"
+                                     (click)="selectByClick('selectedMinute', min)">
+                                    <div *ngIf="selectedMinute == min" class="sector-line" style="height: 85%; top: 15%">
+                                    </div>
+                                    <div [ngClass]="selectedMinute == min ? 'sector-val active' : 'sector-val'">
+                                        {{ min }}
+                                    </div>
+                                    <div class="sector-selector" (mouseover)="mouseOver('selectedMinute', min)"></div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="btn-div">
+                        <button class="tab-index btn-bottom close" (click)="handleOnClose()">Close</button>
+                        <button class="btn-bottom" (click)="handleOnApply()" [disabled]="!wheelClicked">Apply</button>
+                    </div>
+            </div>
+</main>

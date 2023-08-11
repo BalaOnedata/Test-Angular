@@ -1,0 +1,3 @@
+<div class="min-dialer">
+    <div *ngFor="let min of mins; index as i" class="min-handle" [style.--i]="i">{{ i%5 == 0 ? min : '.'}}</div>
+</div>

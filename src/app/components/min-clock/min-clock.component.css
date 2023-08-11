@@ -1,0 +1,16 @@
+.min-dialer{
+    width: 113px;
+    height: 113px;
+    border-radius: 100%;
+    background-color: #EDEEEF;
+    position: relative;
+}
+
+.min-handle{
+    height: 50%;
+    left: 50%;
+    transform: translateX(-50%) rotate(calc(6deg * var(--i)));
+    transform-origin: bottom center;
+    /* clip-path: polygon(0% 0, 100% 0%, 50% 100%, 0 0%); */
+    position: absolute;
+}
